@@ -1,0 +1,512 @@
+
+<div id="lms-triathlon">
+  <style>
+    #lms-triathlon {
+      --ink: #172536;
+      --muted: #677487;
+      --line: #dfe6ee;
+      --blue: #1478bb;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      max-width: 760px;
+      margin: 20px auto;
+      box-sizing: border-box;
+    }
+    #lms-triathlon * { box-sizing: border-box; }
+    #lms-triathlon .panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 24px;
+    }
+    #lms-triathlon .intro {
+      background: #f1f5f9;
+      padding: 22px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    #lms-triathlon .eyebrow {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+    #lms-triathlon h2 {
+      font-size: clamp(23px, 4vw, 32px);
+      line-height: 1.2;
+      margin: 9px 0;
+      color: var(--ink);
+    }
+    #lms-triathlon p {
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 8px 0;
+    }
+    #lms-triathlon label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+    #lms-triathlon input,
+    #lms-triathlon select {
+      width: 100%;
+      height: 45px;
+      border: 1px solid #ccd7e2;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 16px;
+    }
+    #lms-triathlon input:focus,
+    #lms-triathlon select:focus {
+      outline: 2px solid #1478bb;
+      outline-offset: 1px;
+    }
+    #lms-triathlon .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 19px;
+      margin-top: 19px;
+    }
+    #lms-triathlon .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    #lms-triathlon .section {
+      border-top: 1px solid var(--line);
+      margin-top: 24px;
+      padding-top: 23px;
+    }
+    #lms-triathlon .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0 0 15px;
+    }
+    #lms-triathlon .total-box {
+      text-align: center;
+      background: #edf4fa;
+      padding: 27px 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    #lms-triathlon .total-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .7px;
+      color: #496177;
+    }
+    #lms-triathlon .total-time {
+      font-size: clamp(34px, 8vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin: 9px 0 2px;
+      font-variant-numeric: tabular-nums;
+    }
+    #lms-triathlon .bars {
+      display: flex;
+      width: 100%;
+      height: 16px;
+      gap: 2px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #e6ebf0;
+      margin-bottom: 15px;
+    }
+    #lms-triathlon .bars span {
+      min-width: 0;
+      transition: width .2s;
+    }
+    #lms-triathlon .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 2px;
+      border-bottom: 1px solid #edf0f4;
+      font-size: 14px;
+    }
+    #lms-triathlon .result-name {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    #lms-triathlon .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    #lms-triathlon .result-value {
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+    #lms-triathlon button,
+    #lms-triathlon .cta {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 9px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    #lms-triathlon button {
+      margin-top: 21px;
+      color: #fff;
+      background: #1879b8;
+      border: 0;
+    }
+    #lms-triathlon button:hover { background: #105d93; }
+    #lms-triathlon .coaching {
+      text-align: center;
+      padding: 25px 12px 5px;
+    }
+    #lms-triathlon .coaching h3 {
+      font-size: 21px;
+      margin: 0 0 8px;
+    }
+    #lms-triathlon .cta {
+      color: #1478bb;
+      border: 1px solid #1478bb;
+      margin-top: 18px;
+    }
+    #lms-triathlon .cta:hover { background: #edf4fa; }
+    #lms-triathlon .error {
+      color: #b42318;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    #lms-triathlon [hidden] {
+      display: none !important;
+    }
+    @media(max-width: 520px) {
+      #lms-triathlon .panel { padding: 14px; }
+      #lms-triathlon .intro { padding: 17px; }
+      #lms-triathlon .grid { gap: 13px; }
+      #lms-triathlon .total-box { padding: 22px 8px; }
+    }
+  </style>
+
+  <div class="panel">
+    <div class="intro">
+      <div class="eyebrow">TRIATHLON RACE CALCULATOR</div>
+      <h2>Berechne deine Zielzeit.</h2>
+      <p>Von der ersten Schwimmbewegung bis zur Ziellinie.
+        Plane deine persönliche Triathlon-Zielzeit inklusive
+        beider Wechselzonen.</p>
+    </div>
+
+    <label for="lms-distance">Wettkampfdistanz</label>
+    <select id="lms-distance">
+      <option value="sprint">Sprintdistanz</option>
+      <option value="olympic">Olympische Distanz</option>
+      <option value="middle" selected>Mitteldistanz</option>
+      <option value="long">Langdistanz</option>
+      <option value="custom">Individuelle Distanz</option>
+    </select>
+
+    <div id="lms-custom" class="grid" hidden>
+      <div>
+        <label for="lms-cswim">Schwimmen (m)</label>
+        <input id="lms-cswim" type="number"
+               min="1" step="1" value="1900">
+      </div>
+      <div>
+        <label for="lms-cbike">Radfahren (km)</label>
+        <input id="lms-cbike" type="number"
+               min="0.01" step="any" value="90">
+      </div>
+      <div>
+        <label for="lms-crun">Laufen (km)</label>
+        <input id="lms-crun" type="number"
+               min="0.01" step="any" value="21.1">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Deine Wettkampfleistung</div>
+      <div class="grid">
+        <div>
+          <label for="lms-swim">Schwimmen</label>
+          <input id="lms-swim" type="text"
+                 inputmode="numeric" value="1:50">
+          <div class="hint">Pace – min:sek / 100 m</div>
+        </div>
+        <div>
+          <label for="lms-bike">Radfahren</label>
+          <input id="lms-bike" type="number"
+                 min="0.1" step="any" value="34">
+          <div class="hint">Durchschnitt in km/h</div>
+        </div>
+        <div>
+          <label for="lms-run">Laufen</label>
+          <input id="lms-run" type="text"
+                 inputmode="numeric" value="5:00">
+          <div class="hint">Pace – min:sek / km</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Deine Wechselzeiten</div>
+      <div class="grid">
+        <div>
+          <label for="lms-t1">T1 – Swim to Bike</label>
+          <input id="lms-t1" type="text"
+                 inputmode="numeric" value="4:00">
+          <div class="hint">Minuten:Sekunden</div>
+        </div>
+        <div>
+          <label for="lms-t2">T2 – Bike to Run</label>
+          <input id="lms-t2" type="text"
+                 inputmode="numeric" value="3:00">
+          <div class="hint">Minuten:Sekunden</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="total-box">
+        <div class="total-label">
+          DEINE PROGNOSTIZIERTE ZIELZEIT
+        </div>
+        <div id="lms-total" class="total-time"
+             aria-live="polite">--:--:--</div>
+        <div id="lms-distance-label" class="hint">
+          Mitteldistanz
+        </div>
+      </div>
+
+      <div id="lms-bars" class="bars"
+           aria-label="Zeitanteile der Disziplinen"></div>
+      <div id="lms-results"></div>
+      <div id="lms-error" class="error"
+           role="alert" hidden></div>
+
+      <button type="button" id="lms-copy">
+        Ergebnis kopieren
+      </button>
+    </div>
+
+    <div class="coaching">
+      <h3>Du willst deine Zielzeit verbessern?</h3>
+      <p>Mit einem individuellen Trainingsplan,
+        strukturiertem Training und persönlichem Coaching
+        arbeiten wir gemeinsam an deiner Bestleistung.</p>
+      <a class="cta" id="lms-coaching-link"
+         href="/coaching">
+        Mehr über mein Coaching erfahren
+      </a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("lms-triathlon");
+      if (!root || root.dataset.initialized) return;
+      root.dataset.initialized = "true";
+
+      const el = id => root.querySelector("#lms-" + id);
+
+      const distances = {
+        sprint:  { name: "Sprintdistanz", s: 750, b: 20, r: 5 },
+        olympic: { name: "Olympische Distanz", s: 1500, b: 40, r: 10 },
+        middle:  { name: "Mitteldistanz", s: 1900, b: 90, r: 21.1 },
+        long:    { name: "Langdistanz", s: 3800, b: 180, r: 42.195 }
+      };
+
+      const parts = [
+        { key: "swim", name: "Schwimmen", color: "#2697cf" },
+        { key: "t1", name: "Wechsel 1 (T1)", color: "#8c79a4" },
+        { key: "bike", name: "Radfahren", color: "#29a784" },
+        { key: "t2", name: "Wechsel 2 (T2)", color: "#c99545" },
+        { key: "run", name: "Laufen", color: "#e47752" }
+      ];
+
+      let lastResult = null;
+
+      function parseTime(value) {
+        const match = String(value).trim()
+          .match(/^(\d+):([0-5]\d)$/);
+        if (!match) return NaN;
+        return Number(match[1]) * 60 + Number(match[2]);
+      }
+
+      function number(value) {
+        const v = String(value).trim().replace(",", ".");
+        if (!v) return NaN;
+        return Number(v);
+      }
+
+      function format(seconds) {
+        const n = Math.round(seconds);
+        const h = Math.floor(n / 3600);
+        const m = Math.floor((n % 3600) / 60);
+        const s = n % 60;
+        return [h, m, s]
+          .map(v => String(v).padStart(2, "0"))
+          .join(":");
+      }
+
+      function getDistance() {
+        const selected = el("distance").value;
+        if (selected !== "custom") return distances[selected];
+
+        return {
+          name: "Individuelle Distanz",
+          s: number(el("cswim").value),
+          b: number(el("cbike").value),
+          r: number(el("crun").value)
+        };
+      }
+
+      function calculate() {
+        el("custom").hidden = el("distance").value !== "custom";
+
+        const d = getDistance();
+        const swimPace = parseTime(el("swim").value);
+        const bikeSpeed = number(el("bike").value);
+        const runPace = parseTime(el("run").value);
+        const t1 = parseTime(el("t1").value);
+        const t2 = parseTime(el("t2").value);
+
+        const valid =
+          d && [d.s, d.b, d.r, swimPace, bikeSpeed,
+                runPace, t1, t2].every(Number.isFinite) &&
+          d.s > 0 && d.b > 0 && d.r > 0 &&
+          swimPace > 0 && bikeSpeed > 0 && runPace > 0 &&
+          t1 >= 0 && t2 >= 0;
+
+        el("distance-label").textContent = d.name;
+
+        if (!valid) {
+          lastResult = null;
+          el("total").textContent = "--:--:--";
+          el("bars").replaceChildren();
+          el("results").replaceChildren();
+          el("error").hidden = false;
+          el("error").textContent =
+            "Bitte gültige Werte eingeben. Zeiten im Format " +
+            "min:sek, zum Beispiel 1:50. " +
+            "Distanzen, Geschwindigkeit und Paces müssen größer als 0 sein.";
+          el("copy").disabled = true;
+          return;
+        }
+
+        el("error").hidden = true;
+        el("copy").disabled = false;
+
+        const times = {
+          swim: d.s / 100 * swimPace,
+          t1: t1,
+          bike: d.b / bikeSpeed * 3600,
+          t2: t2,
+          run: d.r * runPace
+        };
+
+        const total = Object.values(times)
+          .reduce((sum, time) => sum + time, 0);
+
+        if (!Number.isFinite(total) || total <= 0) return;
+
+        lastResult = { d, times, total };
+        el("total").textContent = format(total);
+
+        const bars = el("bars");
+        const results = el("results");
+        bars.replaceChildren();
+        results.replaceChildren();
+
+        parts.forEach(part => {
+          const segment = document.createElement("span");
+          segment.style.background = part.color;
+          segment.style.width =
+            (times[part.key] / total * 100) + "%";
+          segment.title =
+            part.name + ": " + format(times[part.key]);
+          bars.appendChild(segment);
+
+          const row = document.createElement("div");
+          row.className = "result-row";
+
+          const name = document.createElement("div");
+          name.className = "result-name";
+
+          const dot = document.createElement("span");
+          dot.className = "dot";
+          dot.style.background = part.color;
+
+          const label = document.createElement("span");
+          label.textContent = part.name;
+
+          name.append(dot, label);
+
+          const value = document.createElement("strong");
+          value.className = "result-value";
+          value.textContent = format(times[part.key]);
+
+          row.append(name, value);
+          results.appendChild(row);
+        });
+      }
+
+      async function copyResult() {
+        if (!lastResult) return;
+
+        const { d, times, total } = lastResult;
+        const lines = [
+          "Triathlon-Zeitprognose – Lauf mit Simon",
+          d.name,
+          "Schwimmen: " + format(times.swim),
+          "T1: " + format(times.t1),
+          "Radfahren: " + format(times.bike),
+          "T2: " + format(times.t2),
+          "Laufen: " + format(times.run),
+          "Gesamtzeit: " + format(total)
+        ];
+
+        const value = lines.join("\n");
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            const field = document.createElement("textarea");
+            field.value = value;
+            field.style.position = "fixed";
+            field.style.opacity = "0";
+            document.body.appendChild(field);
+            field.select();
+            const success = document.execCommand("copy");
+            field.remove();
+            if (!success) throw new Error("Kopieren fehlgeschlagen");
+          }
+
+          el("copy").textContent = "Ergebnis kopiert!";
+          setTimeout(() => {
+            el("copy").textContent = "Ergebnis kopieren";
+          }, 2000);
+        } catch (error) {
+          el("copy").textContent = "Kopieren nicht möglich";
+          setTimeout(() => {
+            el("copy").textContent = "Ergebnis kopieren";
+          }, 2500);
+        }
+      }
+
+      root.querySelectorAll("input, select").forEach(input => {
+        input.addEventListener("input", calculate);
+        input.addEventListener("change", calculate);
+      });
+
+      el("copy").addEventListener("click", copyResult);
+      calculate();
+    })();
+  </script>
+</div>
